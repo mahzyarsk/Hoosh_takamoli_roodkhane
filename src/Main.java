@@ -8,16 +8,18 @@ import java.util.Comparator;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static ArrayList<Gen> GEN = new ArrayList<>();
-    public static int Population = 500;
+    public static int Population = 200;
     public static int min = 1;
     public static int max = 10;
+    public static int NumberOfTrip = 16;
+    public static int Generation = 5;
 
     public static void main(String[] args) {
         Random random = new Random();
 
         for (int i = 0; i < Population; i++) {
-            int[] temp = new int[16];
-            for (int j = 0; j < 16; j++) {
+            int[] temp = new int[NumberOfTrip];
+            for (int j = 0; j < NumberOfTrip; j++) {
                 temp[j] = random.nextInt(max - min + 1) + min;
             }
             CheckGen(temp);
@@ -25,10 +27,11 @@ public class Main {
             GEN.add(gen);
         }
         GEN.sort(Comparator.comparing(Gen::getFITNESS));
-        for (int i = 0; i < GEN.size(); i++) {
-            System.out.println(GEN.get(i).getFITNESS());
+        System.out.println(GEN);
+        for (int i = 0; i < Generation; i++) {
+            Crossover();
         }
-
+        System.out.println(GEN);
 
     }
     public static int Fitness(int[] gen){
@@ -63,17 +66,22 @@ public class Main {
         Random random = new Random();
         for (int i = 0; i < gen.length; i++) {
             int Mutation = 0 ;
-            for (int j = 0; j < gen.length; j++) {
-                if(Mutation== 8){
+            for (int j = 0; j < 20; j++) {
+                if(Mutation== 10){
                     gen[i] = 0;
+                    j=20;
                 }
-            if(gen[i] == 1){
+            if(gen[i] == 0){
+                Mutation++;
+                gen[i] = random.nextInt(max - min + 1) + min;
+            }
+            else if(gen[i] == 1){
                 if(gen[i]%2==0 ){
-                    if(i > 6 || 4 <countOccurrencesInRange(gen,gen[i],0,i)){
+                    if(i >= 6 || 4 <countOccurrencesInRange(gen,gen[i],0,i)){
                         Mutation++;
                         gen[i] = random.nextInt(max - min + 1) + min;
                     }
-                }else if(i>1){
+                }else if(i>=1){
                     if(i > 6 ||gen[i-1] == 1 || gen[i-1] == 6 || gen[i-1] == 8 || gen[i-1] == 10 || 4 <countOccurrencesInRange(gen,gen[i],0,i)){
                         Mutation++;
                         gen[i] = random.nextInt(max - min + 1) + min;
@@ -83,11 +91,11 @@ public class Main {
             }
             else if(gen[i] == 2){
                 if(gen[i]%2==0){
-                    if(i > 12 || 2 <countOccurrencesInRange(gen,gen[i],0,i)){
+                    if(i >= 12 || 2 <countOccurrencesInRange(gen,gen[i],0,i)){
                         Mutation++;
                         gen[i] = random.nextInt(max - min + 1) + min;
                     }
-                }else if(i>1){
+                }else if(i>=1){
                     if(i > 12 ||gen[i-1] == 9 || gen[i-1] == 4 || gen[i-1] == 5  || 2 <countOccurrencesInRange(gen,gen[i],0,i)){
                         Mutation++;
                         gen[i] = random.nextInt(max - min + 1) + min;
@@ -96,11 +104,11 @@ public class Main {
             }
             else if(gen[i] == 3){
                 if(gen[i]%2==0){
-                    if(i > 10 || 10 <countOccurrencesInRange(gen,gen[i],0,i)){
+                    if(i >= 10 || 10 <countOccurrencesInRange(gen,gen[i],0,i)){
                         Mutation++;
                         gen[i] = random.nextInt(max - min + 1) + min;
                     }
-                }else if(i>1){
+                }else if(i>=1){
                     if(i > 10 ||gen[i-1] == 9 || 10 <countOccurrencesInRange(gen,gen[i],0,i)){
                         Mutation++;
                         gen[i] = random.nextInt(max - min + 1) + min;
@@ -109,11 +117,11 @@ public class Main {
             }
             else if(gen[i] == 4){
                 if(gen[i]%2==0){
-                    if(i > 8 || 4 <countOccurrencesInRange(gen,gen[i],0,i)){
+                    if(i >= 8 || 4 <countOccurrencesInRange(gen,gen[i],0,i)){
                         Mutation++;
                         gen[i] = random.nextInt(max - min + 1) + min;
                     }
-                }else if(i>1){
+                }else if(i>=1){
                     if(i > 8 ||gen[i-1] == 2|| gen[i-1] == 7 || 4 <countOccurrencesInRange(gen,gen[i],0,i)){
                         Mutation++;
                         gen[i] = random.nextInt(max - min + 1) + min;
@@ -122,11 +130,11 @@ public class Main {
             }
             else if(gen[i] == 5){
                 if(gen[i]%2==0){
-                    if(i > 18 || 3 <countOccurrencesInRange(gen,gen[i],0,i)){
+                    if(i >= 18 || 3 <countOccurrencesInRange(gen,gen[i],0,i)){
                         Mutation++;
                         gen[i] = random.nextInt(max - min + 1) + min;
                     }
-                }else if(i>1){
+                }else if(i>=1){
                     if(i > 18 ||gen[i-1] == 2|| gen[i-1] == 7 || gen[i-1] == 10 || gen[i-1] == 6 || 3 <countOccurrencesInRange(gen,gen[i],0,i)){
                         Mutation++;
                         gen[i] = random.nextInt(max - min + 1) + min;
@@ -135,11 +143,11 @@ public class Main {
             }
             else if(gen[i] == 6){
                 if(gen[i]%2==0){
-                    if(i > 2 || 4 <countOccurrencesInRange(gen,gen[i],0,i)){
+                    if(i >= 2 || 4 <countOccurrencesInRange(gen,gen[i],0,i)){
                         Mutation++;
                         gen[i] = random.nextInt(max - min + 1) + min;
                     }
-                }else if(i>1){
+                }else if(i>=1){
                     if(i > 2 ||gen[i-1] == 5|| gen[i-1] == 1  || 4 <countOccurrencesInRange(gen,gen[i],0,i)){
                         Mutation++;
                         gen[i] = random.nextInt(max - min + 1) + min;
@@ -148,11 +156,11 @@ public class Main {
             }
             else if(gen[i] == 7){
                 if(gen[i]%2==0){
-                    if(i > 14 || 5 <countOccurrencesInRange(gen,gen[i],0,i)){
+                    if(i >= 14 || 5 <countOccurrencesInRange(gen,gen[i],0,i)){
                         Mutation++;
                         gen[i] = random.nextInt(max - min + 1) + min;
                     }
-                }else if(i>1){
+                }else if(i>=1){
                     if(i > 14 ||gen[i-1] == 4|| gen[i-1] == 5 || gen[i-1] == 10  || 5 <countOccurrencesInRange(gen,gen[i],0,i)){
                         Mutation++;
                         gen[i] = random.nextInt(max - min + 1) + min;
@@ -174,11 +182,11 @@ public class Main {
             }
             else if(gen[i] == 9){
                 if(gen[i]%2==0){
-                    if(i > 10 || 3 <countOccurrencesInRange(gen,gen[i],0,i)){
+                    if(i >= 10 || 3 <countOccurrencesInRange(gen,gen[i],0,i)){
                         Mutation++;
                         gen[i] = random.nextInt(max - min + 1) + min;
                     }
-                }else if(i>1){
+                }else if(i>=1){
                     if(i > 10 ||gen[i-1] == 2|| gen[i-1] == 3  || 3 <countOccurrencesInRange(gen,gen[i],0,i)){
                         Mutation++;
                         gen[i] = random.nextInt(max - min + 1) + min;
@@ -187,12 +195,12 @@ public class Main {
             }
             else if(gen[i] == 10){
                 if(gen[i]%2==0){
-                    if(i > 10 || 3 <countOccurrencesInRange(gen,gen[i],0,i)){
+                    if(i >= 10 || 3 <countOccurrencesInRange(gen,gen[i],0,i)){
                         Mutation++;
                         gen[i] = random.nextInt(max - min + 1) + min;
                     }
-                }else if(i>1){
-                    if(i > 10 ||gen[i-1] == 1|| gen[i-1] == 7 || 3 <countOccurrencesInRange(gen,gen[i],0,i)){
+                }else if(i>=1){
+                    if(i >= 10 ||gen[i-1] == 1|| gen[i-1] == 7 || 3 <countOccurrencesInRange(gen,gen[i],0,i)){
                         Mutation++;
                         gen[i] = random.nextInt(max - min + 1) + min;
                     }
@@ -208,6 +216,32 @@ public class Main {
             }
         }
         return count;
+    }
+    public static void Crossover(){
+        GEN.sort(Comparator.comparing(Gen::getFITNESS));
+        Random random = new Random();
+        for (int i = 0; i < Population; i++) {
+            int[] temp = new int[NumberOfTrip];
+            int parent2 = random.nextInt(50);
+            int parent1 = random.nextInt(50);
+            for (int j = 0; j < NumberOfTrip; j++) {
+                if(j>NumberOfTrip/2){
+                    temp[j] = GEN.get(parent1).getGEN()[j];
+                }else {
+                    temp[j] = GEN.get(parent2).getGEN()[j];
+                }
+
+            }
+            CheckGen(temp);
+            Gen gen = new Gen(temp,Fitness(temp));
+            GEN.add(gen);
+        }
+        GEN.sort(Comparator.comparing(Gen::getFITNESS));
+        for (int i = 0; i < Population; i++){
+            GEN.remove(random.nextInt(GEN.size() - ((GEN.size()/4)*3) + 1) + ((GEN.size()/4)*3)-1);
+        }
+        //System.out.println(GEN);
+
     }
 }
 
