@@ -236,9 +236,10 @@ public class Main {
             Gen gen = new Gen(temp,Fitness(temp));
             GEN.add(gen);
         }
-        GEN.sort(Comparator.comparing(Gen::getFITNESS));
+
         for (int i = 0; i < Population; i++){
-            GEN.remove(random.nextInt(GEN.size() - ((GEN.size()/4)*3) + 1) + ((GEN.size()/4)*3)-1);
+            GEN.sort(Comparator.comparing(Gen::getFITNESS));
+            GEN.remove(random.nextInt(GEN.size() - ((GEN.size()/4)*3) + 1) + GEN.size()/2);
         }
         //System.out.println(GEN);
 
