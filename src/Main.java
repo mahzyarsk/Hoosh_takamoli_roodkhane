@@ -8,7 +8,7 @@ import java.util.Comparator;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static ArrayList<Gen> GEN = new ArrayList<>();
-    public static int Population = 200;
+    public static int Population = 50;
     public static int min = 1;
     public static int max = 10;
     public static int NumberOfTrip = 16;
@@ -23,6 +23,7 @@ public class Main {
                 temp[j] = random.nextInt(max - min + 1) + min;
             }
             CheckGen(temp);
+           // Mutation(temp);
             Gen gen = new Gen(temp,Fitness(temp));
             GEN.add(gen);
         }
@@ -206,7 +207,8 @@ public class Main {
                     }
                 }
             }
-        }}
+        }
+        }
     }
     public static int countOccurrencesInRange(int[] array, int target, int start, int end) {
         int count = 0;
@@ -233,6 +235,7 @@ public class Main {
 
             }
             CheckGen(temp);
+            //Mutation(temp);
             Gen gen = new Gen(temp,Fitness(temp));
             GEN.add(gen);
         }
@@ -243,6 +246,237 @@ public class Main {
         }
         //System.out.println(GEN);
 
+    }
+    public static void Mutation(int[] gen){
+        Random random = new Random();
+        for (int i = 0; i < gen.length; i++) {
+            int Mutation = 0 , Mutation_Rate = 80 ;
+            for (int j = 0; j < 20; j++) {
+                if(j == 18){
+                    Mutation =3;
+                }
+                if(gen[i] == 0){
+                    if(Mutation_Rate <= random.nextInt(100) && Mutation<= 1){
+                        Mutation++;
+                        gen[i] = random.nextInt(max - min + 1) + min;
+                    }else {
+                        gen[i] = 0;
+                    }
+
+                }
+                else if(gen[i] == 1){
+                    if(gen[i]%2==0 ){
+                        if(i >= 6 || 4 <countOccurrencesInRange(gen,gen[i],0,i)){
+                            if(Mutation_Rate <= random.nextInt(100) && Mutation<= 1){
+                                Mutation++;
+                                gen[i] = random.nextInt(max - min + 1) + min;
+                            }else {
+                                gen[i] = 0;
+                            }
+                        }
+                    }else if(i>=1){
+                        if(i > 6 ||gen[i-1] == 1 || gen[i-1] == 6 || gen[i-1] == 8 || gen[i-1] == 10 || 4 <countOccurrencesInRange(gen,gen[i],0,i)){
+                            if(Mutation_Rate <= random.nextInt(100)){
+                                Mutation++;
+                                gen[i] = random.nextInt(max - min + 1) + min;
+                            }else {
+                                gen[i] = 0;
+                            }
+                        }
+                    }
+
+                }
+                else if(gen[i] == 2){
+                    if(gen[i]%2==0){
+                        if(i >= 12 || 2 <countOccurrencesInRange(gen,gen[i],0,i)){
+                            if(Mutation_Rate <= random.nextInt(100) && Mutation<= 1){
+                                Mutation++;
+                                gen[i] = random.nextInt(max - min + 1) + min;
+                            }else {
+                                gen[i] = 0;
+                            }
+                        }
+                    }else if(i>=1){
+                        if(i > 12 ||gen[i-1] == 9 || gen[i-1] == 4 || gen[i-1] == 5  || 2 <countOccurrencesInRange(gen,gen[i],0,i)){
+                            if(Mutation_Rate <= random.nextInt(100)){
+                                Mutation++;
+                                gen[i] = random.nextInt(max - min + 1) + min;
+                            }else {
+                                gen[i] = 0;
+                            }
+                        }
+                    }
+                }
+                else if(gen[i] == 3){
+                    if(gen[i]%2==0){
+                        if(i >= 10 || 10 <countOccurrencesInRange(gen,gen[i],0,i)){
+                            if(Mutation_Rate <= random.nextInt(100) && Mutation<= 1){
+                                Mutation++;
+                                gen[i] = random.nextInt(max - min + 1) + min;
+                            }else {
+                                gen[i] = 0;
+                            }
+                        }
+                    }else if(i>=1){
+                        if(i > 10 ||gen[i-1] == 9 || 10 <countOccurrencesInRange(gen,gen[i],0,i)){
+                            if(Mutation_Rate <= random.nextInt(100)){
+                                Mutation++;
+                                gen[i] = random.nextInt(max - min + 1) + min;
+                            }else {
+                                gen[i] = 0;
+                            }
+                        }
+                    }
+                }
+                else if(gen[i] == 4){
+                    if(gen[i]%2==0){
+                        if(i >= 8 || 4 <countOccurrencesInRange(gen,gen[i],0,i)){
+                            if(Mutation_Rate <= random.nextInt(100) && Mutation<= 1){
+                                Mutation++;
+                                gen[i] = random.nextInt(max - min + 1) + min;
+                            }else {
+                                gen[i] = 0;
+                            }
+                        }
+                    }else if(i>=1){
+                        if(i > 8 ||gen[i-1] == 2|| gen[i-1] == 7 || 4 <countOccurrencesInRange(gen,gen[i],0,i)){
+                            if(Mutation_Rate <= random.nextInt(100)){
+                                Mutation++;
+                                gen[i] = random.nextInt(max - min + 1) + min;
+                            }else {
+                                gen[i] = 0;
+                            }
+                        }
+                    }
+                }
+                else if(gen[i] == 5){
+                    if(gen[i]%2==0){
+                        if(i >= 18 || 3 <countOccurrencesInRange(gen,gen[i],0,i)){
+                            if(Mutation_Rate <= random.nextInt(100) && Mutation<= 1){
+                                Mutation++;
+                                gen[i] = random.nextInt(max - min + 1) + min;
+                            }else {
+                                gen[i] = 0;
+                            }
+                        }
+                    }else if(i>=1){
+                        if(i > 18 ||gen[i-1] == 2|| gen[i-1] == 7 || gen[i-1] == 10 || gen[i-1] == 6 || 3 <countOccurrencesInRange(gen,gen[i],0,i)){
+                            if(Mutation_Rate <= random.nextInt(100)){
+                                Mutation++;
+                                gen[i] = random.nextInt(max - min + 1) + min;
+                            }else {
+                                gen[i] = 0;
+                            }
+                        }
+                    }
+                }
+                else if(gen[i] == 6){
+                    if(gen[i]%2==0){
+                        if(i >= 2 || 4 <countOccurrencesInRange(gen,gen[i],0,i)){
+                            if(Mutation_Rate <= random.nextInt(100) && Mutation<= 1){
+                                Mutation++;
+                                gen[i] = random.nextInt(max - min + 1) + min;
+                            }else {
+                                gen[i] = 0;
+                            }
+                        }
+                    }else if(i>=1){
+                        if(i > 2 ||gen[i-1] == 5|| gen[i-1] == 1  || 4 <countOccurrencesInRange(gen,gen[i],0,i)){
+                            if(Mutation_Rate <= random.nextInt(100)){
+                                Mutation++;
+                                gen[i] = random.nextInt(max - min + 1) + min;
+                            }else {
+                                gen[i] = 0;
+                            }
+                        }
+                    }
+                }
+                else if(gen[i] == 7){
+                    if(gen[i]%2==0){
+                        if(i >= 14 || 5 <countOccurrencesInRange(gen,gen[i],0,i)){
+                            if(Mutation_Rate <= random.nextInt(100) && Mutation<= 1){
+                                Mutation++;
+                                gen[i] = random.nextInt(max - min + 1) + min;
+                            }else {
+                                gen[i] = 0;
+                            }
+                        }
+                    }else if(i>=1){
+                        if(i > 14 ||gen[i-1] == 4|| gen[i-1] == 5 || gen[i-1] == 10  || 5 <countOccurrencesInRange(gen,gen[i],0,i)){
+                            if(Mutation_Rate <= random.nextInt(100)){
+                                Mutation++;
+                                gen[i] = random.nextInt(max - min + 1) + min;
+                            }else {
+                                gen[i] = 0;
+                            }
+                        }
+                    }
+                }
+                else if(gen[i] == 8){
+                    if(gen[i]%2==0){
+                        if(i > 16 || 1 <countOccurrencesInRange(gen,gen[i],0,i)){
+                            if(Mutation_Rate <= random.nextInt(100) && Mutation<= 1){
+                                Mutation++;
+                                gen[i] = random.nextInt(max - min + 1) + min;
+                            }else {
+                                gen[i] = 0;
+                            }
+                        }
+                    }else if(i>1){
+                        if(i > 16 ||gen[i-1] == 1|| gen[i-1] == 8  || 1 <countOccurrencesInRange(gen,gen[i],0,i)){
+                            if(Mutation_Rate <= random.nextInt(100)){
+                                Mutation++;
+                                gen[i] = random.nextInt(max - min + 1) + min;
+                            }else {
+                                gen[i] = 0;
+                            }
+                        }
+                    }
+                }
+                else if(gen[i] == 9){
+                    if(gen[i]%2==0){
+                        if(i >= 10 || 3 <countOccurrencesInRange(gen,gen[i],0,i)){
+                            if(Mutation_Rate <= random.nextInt(100) && Mutation<= 1){
+                                Mutation++;
+                                gen[i] = random.nextInt(max - min + 1) + min;
+                            }else {
+                                gen[i] = 0;
+                            }
+                        }
+                    }else if(i>=1){
+                        if(i > 10 ||gen[i-1] == 2|| gen[i-1] == 3  || 3 <countOccurrencesInRange(gen,gen[i],0,i)){
+                            if(Mutation_Rate <= random.nextInt(100)){
+                                Mutation++;
+                                gen[i] = random.nextInt(max - min + 1) + min;
+                            }else {
+                                gen[i] = 0;
+                            }
+                        }
+                    }
+                }
+                else if(gen[i] == 10){
+                    if(gen[i]%2==0){
+                        if(i >= 10 || 3 <countOccurrencesInRange(gen,gen[i],0,i)){
+                            if(Mutation_Rate <= random.nextInt(100) && Mutation<= 1){
+                                Mutation++;
+                                gen[i] = random.nextInt(max - min + 1) + min;
+                            }else {
+                                gen[i] = 0;
+                            }
+                        }
+                    }else if(i>=1){
+                        if(i >= 10 ||gen[i-1] == 1|| gen[i-1] == 7 || 3 <countOccurrencesInRange(gen,gen[i],0,i)){
+                            if(Mutation_Rate <= random.nextInt(100)){
+                                Mutation++;
+                                gen[i] = random.nextInt(max - min + 1) + min;
+                            }else {
+                                gen[i] = 0;
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 
