@@ -6,12 +6,12 @@ import java.util.Comparator;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static ArrayList<Gen> GEN = new ArrayList<>();
-    public static int Population = 200;
+    public static int Population = 100;
     public static ArrayList<product> Product = new ArrayList<>();
     public static int min = 1;
     public static int max = 10;
     public static int NumberOfTrip = 20;
-    public static int Generation = 5;
+    public static int Generation = 10;
 
     public static void main(String[] args) {
         Random random = new Random();
@@ -66,14 +66,25 @@ public class Main {
 
     }
     public static int Fitness(int[] gen){
-        int FITNESS = 0;
+        int FITNESS = 0, masrafi =0;
+        for (int i = 0; i < Product.size(); i++) {
+            if(Product.get(i).getExpiration_Date() < NumberOfTrip){
+                masrafi += Product.get(i).getValue() * Product.get(i).getInventory();
+                for (int j = 0; j < gen.length; j++) {
+                    if(gen[j]!=0 && gen[j] == i+1){
+                        FITNESS +=Product.get(gen[j]-1).getValue();
+                    }
+                }
+            }
+        }
 
         for (int i = 0; i < gen.length; i++) {
             if(gen[i]!=0){
                 FITNESS +=Product.get(gen[i]-1).getValue();
             }
         }
-        return  (FITNESS*2)-1150;
+        //return  (FITNESS*2)-1150;
+        return  (FITNESS)-masrafi;
     }
     public static void CheckGen(int[] gen){
         Random random = new Random();
@@ -87,12 +98,12 @@ public class Main {
                 }
 
                     if (gen[i] % 2 == 0 ) {
-                        if (Check_Expiration_Date(gen[i] - 1, i) || (Product.get(gen[i] - 1).getExpiration_Date() < countOccurrencesInRange(gen, gen[i], 0, i))) {
+                        if (Check_Expiration_Date(gen[i] - 1, i) || (Product.get(gen[i] - 1).getInventory()  < countOccurrencesInRange(gen, gen[i], 0, i))) {
                             Mutation++;
                             gen[i] = random.nextInt(max - min + 1) + min;
                         }
-                    } else if (gen[i] % 2 == 1 && i > 1) {
-                        if (Check_Expiration_Date(gen[i] - 1, i) || (Check_Interference(gen[i] - 1, gen[i - 1])) || (Product.get(gen[i] - 1).getExpiration_Date() < countOccurrencesInRange(gen, gen[i], 0, i))) {
+                    } else if (gen[i] % 2 == 1 && i >= 1) {
+                        if (Check_Expiration_Date(gen[i] - 1, i) || (Check_Interference(gen[i] - 1, gen[i - 1])) || (Product.get(gen[i] - 1).getInventory() < countOccurrencesInRange(gen, gen[i], 0, i))) {
                             Mutation++;
                             gen[i] = random.nextInt(max - min + 1) + min;
                         }
@@ -121,8 +132,9 @@ public class Main {
             int parent2 = random.nextInt(Population);
             int parent1 = random.nextInt(Population);
             for (int j = 0; j < NumberOfTrip; j++) {
-                if(j>=NumberOfTrip/2){
-              //if(j<NumberOfTrip/2){
+              //  if(j>=NumberOfTrip/2){
+              if(j<NumberOfTrip/2){
+               // if(NumberOfTrip%2==0){
                     temp[j] = GEN.get(parent1).getGEN()[j];
                 }else {
                     temp[j] = GEN.get(parent2).getGEN()[j];
