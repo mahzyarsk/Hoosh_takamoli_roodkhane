@@ -8,6 +8,7 @@ public class Main {
     public static ArrayList<Gen> GEN = new ArrayList<>();
     public static int Population = 100;
     public static ArrayList<product> Product = new ArrayList<>();
+    public static int Child = 100;
     public static int min = 1;
     public static int max = 10;
     public static int NumberOfTrip = 20;
@@ -125,9 +126,9 @@ public class Main {
         return count;
     }
     public static void Crossover(){
-        GEN.sort(Comparator.comparing(Gen::getFITNESS));
+        //GEN.sort(Comparator.comparing(Gen::getFITNESS));
         Random random = new Random();
-        for (int i = 0; i < Population/2; i++) {
+        for (int i = 0; i < Child; i++) {
             int[] temp = new int[NumberOfTrip];
             int parent2 = random.nextInt(Population);
             int parent1 = random.nextInt(Population);
@@ -147,7 +148,7 @@ public class Main {
             GEN.add(gen);
         }
 
-        for (int i = 0; i < Population/2; i++){
+        for (int i = 0; i < Child; i++){
             GEN.sort(Comparator.comparing(Gen::getFITNESS));
             GEN.remove(random.nextInt(GEN.size() - ((GEN.size()/4)*3) + 1) + GEN.size()/2);
         }
