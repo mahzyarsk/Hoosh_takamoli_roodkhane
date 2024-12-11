@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 import java.util.Comparator;
 
@@ -6,13 +7,13 @@ import java.util.Comparator;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static ArrayList<Gen> GEN = new ArrayList<>();
-    public static int Population = 100;
+    public static int Population = 500;
     public static ArrayList<product> Product = new ArrayList<>();
-    public static int Child = 100;
+    public static int Child = 200;
     public static int min = 1;
     public static int max = 10;
     public static int NumberOfTrip = 20;
-    public static int Generation = 10;
+    public static int Generation = 30;
 
     public static void main(String[] args) {
         Random random = new Random();
@@ -88,28 +89,29 @@ public class Main {
         return  (FITNESS)-masrafi;
     }
     public static void CheckGen(int[] gen){
+
         Random random = new Random();
+        int possible = random.nextInt(max - min + 1) + min;
         for (int i = 0; i < NumberOfTrip; i++) {
             int Mutation = 0 ;
             for (int j = 0; j <50; j++) {
-
-                if(gen[i] == 0){
-                    Mutation++;
-                    gen[i] = random.nextInt(max - min + 1) + min;
-                }
-
                     if (gen[i] % 2 == 0 ) {
-                        if (Check_Expiration_Date(gen[i] - 1, i) || (Product.get(gen[i] - 1).getInventory()  < countOccurrencesInRange(gen, gen[i], 0, i))) {
+                        if (gen[i] == 0 || Check_Expiration_Date(gen[i] - 1, i) || (Product.get(gen[i] - 1).getInventory()  < countOccurrencesInRange(gen, gen[i], 0, i))) {
                             Mutation++;
-                            gen[i] = random.nextInt(max - min + 1) + min;
+                            gen[i] = possible;
+                            possible++;
                         }
                     } else if (gen[i] % 2 == 1 && i >= 1) {
-                        if (Check_Expiration_Date(gen[i] - 1, i) || (Check_Interference(gen[i] - 1, gen[i - 1])) || (Product.get(gen[i] - 1).getInventory() < countOccurrencesInRange(gen, gen[i], 0, i))) {
+                        if (gen[i] == 0 || Check_Expiration_Date(gen[i] - 1, i) || (Check_Interference(gen[i] - 1, gen[i - 1])) || (Product.get(gen[i] - 1).getInventory() < countOccurrencesInRange(gen, gen[i], 0, i))) {
                             Mutation++;
-                            gen[i] = random.nextInt(max - min + 1) + min;
+                            gen[i] = possible;
+                            possible++;
                         }
                     }
-                if(Mutation >= 20){
+                if(possible >= Product.size()+1){
+                    possible = 1;
+                }
+                if(Mutation >= 11){
                     gen[i] = 0;
                     j=60;
                 }
@@ -126,19 +128,35 @@ public class Main {
         return count;
     }
     public static void Crossover(){
-        //GEN.sort(Comparator.comparing(Gen::getFITNESS));
+       // GEN.sort(Comparator.comparing(Gen::getFITNESS));
         Random random = new Random();
         for (int i = 0; i < Child; i++) {
+            int NT = 0;
             int[] temp = new int[NumberOfTrip];
-            int parent2 = random.nextInt(Population);
-            int parent1 = random.nextInt(Population);
+            int parent2 = random.nextInt(GEN.size());
+            int parent1 = random.nextInt(GEN.size());
+            while (true){
+                if(Arrays.equals(GEN.get(parent1).getGEN(), GEN.get(parent2).getGEN())){
+                    parent2 = random.nextInt(Population);
+                    break;
+                }
+                else {
+                    break;
+                }
+            }
+
             for (int j = 0; j < NumberOfTrip; j++) {
+                NT++;
               //  if(j>=NumberOfTrip/2){
-              if(j<NumberOfTrip/2){
-               // if(NumberOfTrip%2==0){
+             // if(j<NumberOfTrip/2){
+                if(NT%2==0){
                     temp[j] = GEN.get(parent1).getGEN()[j];
+                    temp[j+1] = GEN.get(parent1).getGEN()[j+1];
+                    j++;
                 }else {
                     temp[j] = GEN.get(parent2).getGEN()[j];
+                    temp[j+1] = GEN.get(parent2).getGEN()[j+1];
+                    j++;
                 }
 
             }
