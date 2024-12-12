@@ -7,14 +7,14 @@ import java.util.Comparator;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static ArrayList<Gen> GEN = new ArrayList<>();
-    public static int Population = 500;
+    public static int Population = 1000;
     public static ArrayList<product> Product = new ArrayList<>();
-    public static int Child = 200;
+    public static int Child = 600;
     public static int min = 1;
     public static int max = 10;
     public static int NumberOfTrip = 20;
-    public static int Generation = 30;
-    public static int Mutation_Rate = 5;
+    public static int Generation = 50;
+    public static int Mutation_Rate = 8;
 
     public static void main(String[] args) {
         Random random = new Random();
